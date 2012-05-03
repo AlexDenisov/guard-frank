@@ -1,8 +1,12 @@
 require 'guard'
 require 'guard/guard'
+require 'guard/notifier'
+#require 'frank/runner'
 
 module Guard
   class Frank < Guard
+
+    autoload :Runner, 'guard/frank/runner'
 
     # Initialize a Guard.
     # @param [Array<Guard::Watcher>] watchers the Guard file watchers
@@ -10,19 +14,18 @@ module Guard
     def initialize(watchers = [], options = {})
       super
       @options = {
-          :all_after_pass => true,
           :all_on_start   => true,
-          :keep_failed    => true,
-          :cli            => '--no-profile --color --format progress --strict'
       }.update(options)
-
-      @last_failed  = false
-      @failed_paths = []
     end
 
     # Call once when Guard starts. Please override initialize method to init stuff.
     # @raise [:task_has_failed] when start has failed
     def start
+      @runner = Runner.new @options
+      if @runner.nil?
+        @raise [:task_has_failed]
+      end
+      notify_start
       run_all if @options[:all_on_start]
     end
 
@@ -41,20 +44,43 @@ module Guard
     # This method should be principally used for long action like running all specs/tests/...
     # @raise [:task_has_failed] when run_all has failed
     def run_all
-      system("cucumber")
+      run("features")
     end
 
     # Called on file(s) modifications that the Guard watches.
     # @param [Array<String>] paths the changes files or paths
     # @raise [:task_has_failed] when run_on_change has failed
     def run_on_change(paths)
-      system("cucumber")
+      run(paths)
     end
 
     # Called on file(s) deletions that the Guard watches.
     # @param [Array<String>] paths the deleted files or paths
     # @raise [:task_has_failed] when run_on_change has failed
     def run_on_deletion(paths)
+    end
+
+
+    private
+
+    def run(features)
+      if @runner.run(features)
+        notify_success
+      else
+        notify_failure
+      end
+    end
+
+    def notify_start
+      ::Guard::Notifier.notify 'Started successfully', :title => "Frank", :image => :success
+    end
+
+    def notify_success
+      ::Guard::Notifier.notify 'Success', :title => "Frank", :image => :success
+    end
+
+    def notify_failure
+      ::Guard::Notifier.notify 'Failed', :title => "Frank", :image => :failed
     end
 
   end

@@ -1,6 +1,6 @@
 # Guard::Frank
 
-TODO: Write a gem description
+Guard gem for
 
 ## Installation
 
