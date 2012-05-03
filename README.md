@@ -1,29 +1,24 @@
 # Guard::Frank
 
-Guard gem for
+Guard gem for [Frank-Cucumber](http://www.testingwithfrank.com/)
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'guard-frank'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install guard-frank
 
 ## Usage
 
-TODO: Write usage instructions here
+Add support of the frank-cucumber to your project as [described](http://www.testingwithfrank.com/installing.html).
+Then go to the Xcode settings and setup Derived Data as Relative.
 
-## Contributing
+![Xcode locations](https://github.com/locations.png).
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+When you're done, run following commands from project_path/Frank directory
+
+    $ guard init frank
+    $ guard
+
+Note that Frank needs to know which target of project you want to test.
+So after initilizing frank you need modify Guardfile, if neccessary.
+By default Guard::Frank trying to test 'frankified' target.
+
