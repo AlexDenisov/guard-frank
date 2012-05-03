@@ -18,7 +18,7 @@ When you're done, run following commands from project_path/Frank directory
     $ guard init frank
     $ guard
 
-Note that Frank needs to know which target of project you want to test.
-So after initilizing frank you need modify Guardfile, if neccessary.
-By default Guard::Frank trying to test 'frankified' target.
+Note that Frank needs to know which target of project you want to test.     
+So after initilizing frank you need modify Guardfile, if neccessary.     
+By default Guard::Frank trying to test 'frankified' target.     
 
