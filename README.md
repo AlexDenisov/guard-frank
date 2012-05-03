@@ -1,6 +1,7 @@
 # Guard::Frank
 
-Guard gem for [Frank-Cucumber](http://www.testingwithfrank.com/)
+Guard gem for [Frank-Cucumber](http://www.testingwithfrank.com/).
+Guard::Frank automatically run your frank-cucumber features for iOS.
 
 ## Installation
 
