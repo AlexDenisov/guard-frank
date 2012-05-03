@@ -11,7 +11,7 @@ Guard gem for [Frank-Cucumber](http://www.testingwithfrank.com/)
 Add support of the frank-cucumber to your project as [described](http://www.testingwithfrank.com/installing.html).
 Then go to the Xcode settings and setup Derived Data as Relative.
 
-![Xcode locations](https://github.com/AlexDenisov/guard-frank/blob/master/locations.png).
+![Xcode locations](https://github.com/AlexDenisov/guard-frank/blob/master/locations.png?raw=true).
 
 When you're done, run following commands from project_path/Frank directory
 
