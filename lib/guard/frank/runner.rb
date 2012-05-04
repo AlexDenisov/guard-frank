@@ -19,12 +19,20 @@ module Guard
         UI.info "Could not run Frank. \n'#{self.bundle_path}' not found."
         return false
       end
-      start_message = features.eql?("features")  ? "Run all features" : "Run #{features}"
+      if features.eql?("features")
+        start_message = "Run all features"
+      else
+        features = features.join(' ') if features.kind_of? Array
+        start_message = "Run #{features}"
+      end
       UI.info start_message
       system(command(features))
     end
 
     def command(features)
+      if features.kind_of? Array
+        features = features.join(' ')
+      end
       "APP_BUNDLE_PATH='#{self.bundle_path}' cucumber #{features} --require features"
     end
 
