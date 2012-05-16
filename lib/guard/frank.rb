@@ -1,12 +1,10 @@
 require 'guard'
 require 'guard/guard'
 require 'guard/notifier'
-#require 'frank/runner'
+require 'guard/frank/runner'
 
 module Guard
   class Frank < Guard
-
-    autoload :Runner, 'guard/frank/runner'
 
     # Initialize a Guard.
     # @param [Array<Guard::Watcher>] watchers the Guard file watchers
