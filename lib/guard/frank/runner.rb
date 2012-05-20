@@ -1,17 +1,43 @@
 module Guard
   class Runner
     attr_accessor :bundle_path
+    attr_accessor :project
+    attr_accessor :target
+    attr_accessor :config
     def initialize(options)
+      self.project = init_project(options)
+      self.bundle_path = bundle(options)
+      self.target = init_target(options)
+      self.config = init_config(options)
+    end
+
+    def init_project(options)
       if options[:project].nil?
         Dir.chdir("..")
-        project = Dir.glob("*.xcodeproj").first
-        if project
-          options[:project] = project.gsub(".xcodeproj","")
+        xproject = Dir.glob("*.xcodeproj").first
+        if xproject
+          xproject.gsub(".xcodeproj","")
         else
           UI.info "You must specify project name at your Guardfile."
+          nil
         end
       end
-      self.bundle_path = bundle(options)
+    end
+
+    def init_config(options)
+      if options[:config].nil?
+        "Debug"
+      else
+        options[:config]
+      end
+    end
+
+    def init_target(options)
+      if options[:target].nil?
+        options[:target]
+      else
+        "frankified"
+      end
     end
 
     def run(features)
@@ -19,7 +45,7 @@ module Guard
         UI.info "Could not run Frank. \n'#{self.bundle_path}' not found."
         return false
       end
-      if features.eql?("features")
+      if features.eql?("features") or features.empty?
         start_message = "Run all features"
       else
         features = features.join(' ') if features.kind_of? Array
@@ -41,9 +67,9 @@ module Guard
       if File.exists?"Frank"
         Dir.chdir("Frank")
       end
-      project = options[:project]
-      target = options[:target] || "frankified"
-      config = options[:config] || "Debug"
+      project = self.project
+      target = self.target
+      config = self.config
       device = "iphonesimulator"
       bundle_path = "#{pwd}/DerivedData/#{project}/Build/Products/#{config}-#{device}/#{target}.app"
     end
