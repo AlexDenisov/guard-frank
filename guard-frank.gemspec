@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.name          = "guard-frank"
   gem.require_paths = ["lib"]
   gem.version       = Guard::FrankVersion::VERSION
-  gem.add_dependency 'guard', '>=1.1.1'
+  gem.add_dependency 'guard', '<1.1.0'
   gem.add_dependency 'frank-cucumber'
   gem.required_ruby_version     = '>= 1.8.7'
   gem.required_rubygems_version = '>= 1.3.6'
